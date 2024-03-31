@@ -1,0 +1,43 @@
+Installation of Docker and Docker Compose
+Step 1: Update Your System
+sudo apt-get update
+Step 2: Install Required Packages
+sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+Step 3: Add Docker’s Official GPG Key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+Step 4: Add the Docker Repository to APT sources
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+Step 5: Install Docker CE (Community Edition)
+sudo apt-get update
+sudo apt-get install docker-ce
+Step 6: Verify Docker is Installed Successfully
+For non-systemd Linux systems: 
+sudo service docker start
+sudo docker run hello-world
+Step 7: Install Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+Set the permissions:
+sudo chmod +x /usr/local/bin/docker-compose
+Verify the installation:
+docker-compose --version
+
+Launching Kafka and Zookeeper
+Step 1: Create docker-compose.yml file
+Step 2: Launching Kafka and Zookeeper
+sudo docker-compose up -d
+Step 3: Checking that instances work
+sudo docker-compose ps
+Step 4: Creation of a topic in Kafka
+sudo docker exec -it <kafka_container_name> kafka-topics --create --topic <kafka_topic_name> --partitions 1 --replication-factor 1 --if-not-exists --bootstrap-server localhost:9092
+Step 5: Stopping the instance
+docker-compose stop
+If you want to stop the containers and also delete them: docker-compose down
+Run instances: docker-compose up -d
+Step 6: Setting the Message Lifetime
+sudo docker exec -it <container_id> kafka-configs --bootstrap-server localhost:9092 --alter --entity-type topics --entity-name sales_data --add-config retention.ms=10000
+
+
+
+
+
+
